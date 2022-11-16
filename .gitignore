@@ -1,5 +1,11 @@
+# FOLDERS
+
 bin/
 obj/
 /packages/
-riderModule.iml
 /_ReSharper.Caches/
+.idea
+
+# FILES
+
+riderModule.iml
