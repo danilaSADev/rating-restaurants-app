@@ -1,0 +1,14 @@
+﻿@using RestaurantRatingsApp.Data.Models
+@using Microsoft.AspNetCore.Identity
+@model dynamic
+@inject UserManager<AppUser> UserManager
+
+@{
+    ViewBag.Title = "Sample";
+    Layout = "_Layout";
+}
+
+<h2>Showing @User.Identity?.Name data</h2>
+<div>
+    @UserManager.FindByEmailAsync(User.Identity?.Name).Result.Id
+</div>

@@ -11,22 +11,21 @@ namespace RestaurantRatingsApp.Data;
 /// </summary>
 public static class ModelBuilderExtensions
 {
-    public static void Seed(this IServiceProvider serviceProvider)
+    public static void Seed(IServiceProvider serviceProvider)
     {
-        var context = serviceProvider.GetService<ApplicationDbContext>();
+        var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
         string[] roles = { "Owner", "Administrator", "Moderator", "User"};
 
         foreach (string role in roles)
-        {
+        {        
             var roleStore = new RoleStore<IdentityRole>(context);
-
-            if (!context.Roles.Any(r => r.Name == role))
+            if (!context.Roles.AnyAsync(r => r.Name == role).Result)
             {
                 roleStore.CreateAsync(new IdentityRole(role));
             }
         }
-        
+
         var user = new AppUser()
         {
             Email = "danilasadev@example.com",
@@ -51,7 +50,7 @@ public static class ModelBuilderExtensions
             // Console.WriteLine(result);
         }
 
-        AssignRoles(serviceProvider, user.Email, roles);
+        AssignRoles(serviceProvider, user.Email, roles);    
 
         context.SaveChangesAsync();
     }

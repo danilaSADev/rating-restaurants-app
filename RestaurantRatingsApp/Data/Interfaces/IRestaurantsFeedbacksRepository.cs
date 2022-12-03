@@ -8,6 +8,5 @@ public interface IRestaurantsFeedbacksRepository
     Task<RestaurantFeedback> Read(long id);
     void Update(RestaurantFeedback model);
     Task Delete(long id);
-    
     IQueryable<RestaurantFeedback> ReadAll();
 }
