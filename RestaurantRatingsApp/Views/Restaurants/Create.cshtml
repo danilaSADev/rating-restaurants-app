@@ -1,0 +1,19 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Add restaurant";
+    Layout = "_Layout";
+}
+
+<h2>Add new restaurant</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Name">Name: </label>
+        <input name="Name" class="form-control" />
+        <label for="ShortDescription">Short description: </label>
+        <input name="ShortDescription" class="form-control" />
+        <label for="Address">Address: </label>
+        <input name="Address" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

@@ -24,6 +24,20 @@ public class RestaurantsFeedbacksRepository : IRestaurantsFeedbacksRepository
         return await _context.Feedbacks.FirstAsync(m => m.Id == id);
     }
 
+    public double GetRatingForRestaurant(long id)
+    {
+        Restaurant restaurant = _context.Restaurants.First(r => r.Id == id);
+        return _context.Feedbacks
+            .Where(r => r.Id == restaurant.Id)
+            .ToList()
+            .Average(r => r.Rating);
+    }
+    
+    public IEnumerable<RestaurantFeedback> GetFeedbacksByRestaurant(Restaurant restaurant)
+    {
+        return _context.Feedbacks.Where(feedback => feedback.Restaurant.Id == restaurant.Id).ToList();
+    }
+
     public void Update(RestaurantFeedback model)
     {
         _context.Feedbacks.Update(model);
@@ -36,7 +50,7 @@ public class RestaurantsFeedbacksRepository : IRestaurantsFeedbacksRepository
         _context.Feedbacks.Remove(entity);
     }
 
-    public IQueryable<RestaurantFeedback> ReadAll()
+    public IEnumerable<RestaurantFeedback> ReadAll()
     {
         var entities = from m in _context.Feedbacks select m;
         return entities;

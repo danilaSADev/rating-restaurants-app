@@ -1,0 +1,27 @@
+﻿@using RestaurantRatingsApp.Data.Interfaces
+@using RestaurantRatingsApp.Data.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model dynamic
+@inject IRestaurantsRepository _repository;
+@inject IRestaurantsFeedbacksRepository _feedbacksRepository;
+@{
+    ViewBag.Title = "title";
+    ViewBag.Restaurants = _repository.ReadAll();
+    Layout = "_Layout";
+}
+
+<h2>List of restaurants</h2>
+<a asp-action="Create" class="btn btn-secondary">Add a new restaurant</a>
+<table class="table table-sm table-bordered table-bordered">
+    <tr><th>Name</th><th>Rating</th><th>View feedbacks</th></tr>
+    @foreach (var restaurant in ViewBag.Restaurants)
+    {
+        <tr>
+            <td>@restaurant.Name</td>
+            @* <td>@_feedbacksRepository.GetRatingForRestaurant(restaurant.Id)</td> *@
+            <td>
+                <a href="@Url.Action("DetailsForRestaurant", (object)restaurant)%>"> View </a>
+            </td>
+        </tr>
+    }
+</table>

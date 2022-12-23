@@ -109,12 +109,12 @@ namespace RestaurantRatingsApp.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var user = _userManager.FindByEmailAsync(Input.Email).Result;
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && user != null)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var user = _userManager.FindByEmailAsync(Input.Email).Result;
                 
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)

@@ -1,0 +1,26 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<div>
+    <h1>Detailed information</h1>
+    <h2>@ViewBag.Restaurant.Name </h2>
+    <h3>@ViewBag.Restaurant.ShortDescription </h3>
+    <h3>@ViewBag.Restaurant.Address </h3>
+</div>
+<div>
+    <h2>Feedbacks</h2>
+    <table class="table table-sm table-bordered table-bordered">
+        <tr><th>Author</th><th>Comment</th><th>Rating</th></tr>
+        @foreach (var feedback in ViewBag.Feedbacks)
+        {
+            <tr>
+                <td>@User.Identity?.Name</td>
+                <td>@feedback.Header</td>
+                <td>@feedback.Rating</td>
+            </tr>
+        }
+    </table>
+</div>

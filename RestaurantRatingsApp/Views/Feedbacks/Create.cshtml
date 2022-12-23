@@ -1,0 +1,27 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RestaurantRatingsApp.Data.Models
+@using System.Collections
+
+@{
+    ViewBag.Title = "Create feedback";
+    Layout = "_Layout";
+}
+
+<h2>Create new feedback</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Header">Comment: </label>
+        <input name="Header" class="form-control" />
+        <label for="Restaurant">Restaurant: </label>
+        <select name="Restaurant" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+            @foreach (var item in (IEnumerable<Restaurant>)ViewBag.Restaurants)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <label for="Rating">Rating: </label>
+        <input name="Rating" type="number"  min="0" max="5" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

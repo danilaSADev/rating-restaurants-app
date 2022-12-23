@@ -13,11 +13,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddRazorPages();
 builder.Services.AddMemoryCache();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
+builder.Services.AddTransient<IRestaurantsRepository, RestaurantsRepository>();
 builder.Services.AddTransient<IRestaurantsFeedbacksRepository, RestaurantsFeedbacksRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddHealthChecks();
-
+builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services
     .AddIdentity<AppUser, IdentityRole>(options => {
         options.User.RequireUniqueEmail = false;
@@ -30,12 +31,13 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-// TODO : Fix data seeding bugs
 // app.Services.Seed();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {

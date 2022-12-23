@@ -6,9 +6,11 @@
 @{
     ViewBag.Title = "Sample";
     Layout = "_Layout";
+    ViewBag.CurrentUser = UserManager.FindByEmailAsync(User.Identity?.Name).Result;
 }
 
 <h2>Showing @User.Identity?.Name data</h2>
 <div>
-    @UserManager.FindByEmailAsync(User.Identity?.Name).Result.Id
+    Your ID : @ViewBag.CurrentUser.Id
+    Name: @User.Identity?.Name
 </div>
